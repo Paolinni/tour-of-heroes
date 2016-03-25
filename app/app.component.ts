@@ -1,15 +1,14 @@
-import {Component} from 'angular2/core';
+import {Component, OnInit} from 'angular2/core';
 import {HeroDetailComponent} from './hero-detail.component';
 import {Hero} from './hero';
 import {HeroService} from './hero.service';
-
-constructor(private _heroService: HeroService) {};
 
 @Component({
     selector: 'my-app',
     template: `
       <h1>{{title}}</h1>
       <h2>My Heroes</h2>
+      poop
       <ul class="heroes">
         <li *ngFor="#hero of heroes"
           [class.selected]="hero === selectedHero"
@@ -72,11 +71,22 @@ directives: [HeroDetailComponent],
 providers: [HeroService]
 
 })
-export class AppComponent {
-  public title = 'Tour of Heroes';
-  public selectedHero: Hero;
-  public heroes: Hero[];
+export class AppComponent implements OnInit {
+    title = 'Tour of Heroes';
+    selectedHero: Hero;
+    heroes: Hero[];
 
-  public onSelect(hero: Hero) { this.selectedHero = hero; }
+    constructor(private _heroService: HeroService) {};
+
+    getHeroes() {
+        this._heroService.getHeroes()
+            .then(heroes => this.heroes = heroes);
+    }
+
+    ngOnInit() {
+        this.getHeroes();
+    }
+
+    onSelect(hero: Hero) { this.selectedHero = hero; }
 }
 
