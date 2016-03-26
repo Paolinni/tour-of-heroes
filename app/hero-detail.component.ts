@@ -5,10 +5,11 @@ import {Hero} from './hero';
 
 @Component({
   selector: 'my-hero-detail',
-  templateUrl: 'app/hero-detail.component.html',
-  inputs: ['hero']
+  templateUrl: 'app/hero-detail.component.html'
 })
 export class HeroDetailComponent implements OnInit {
+  @Input() hero: Hero;
+
   constructor(
     private _heroService: HeroService,
     private _routeParams: RouteParams
@@ -23,6 +24,4 @@ export class HeroDetailComponent implements OnInit {
   goBack() {
     window.history.back();
   }
-
-  hero: Hero;
 }
